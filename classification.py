@@ -1,3 +1,12 @@
+"""classification.py: A grab-bag of functions for fitting classification 
+models with scikit-learn and pandas"""
+
+__author__      = "EagleKahnXylem"
+__copyright__   = "Copyright 2021"
+__license__     = "MIT"
+__version__     = "0.1"
+__status__      = "Testing"
+
 import pandas as pd
 import numpy as np
 from math import sqrt
