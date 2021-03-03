@@ -1,3 +1,10 @@
+import pandas as pd
+import numpy as np
+from math import sqrt
+from typing import List, Dict
+from sklearn.linear_model import LogisticRegression 
+from sklearn.ensemble import RandomForestClassifier
+
 def shuffle(df : pd.DataFrame, balance_classes : bool = False, 
   response : str ="Survived", frac : float = 1.0):
   """ randomly shuffle an input pandas dataframe object, optionally 
