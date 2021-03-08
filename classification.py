@@ -164,12 +164,15 @@ def fit_random_forests(df, variables : list = [], dummy_variables : list = [],
  
   return result
  
-def predict(m : None, x : pd.DataFrame, variables: list = None, scale : dict = None):
+def predict(m : None, x : pd.DataFrame, variables: list = None, scale : dict = None, type:str = ""):
   """ converts a design matrix (dataframe) into a numpy array that we can 
   predict across """
   if isinstance(x, pd.DataFrame):
     x = x[variables].to_numpy().reshape(-1, len(variables))
-  return m.predict(x)
+  if type.lower() == "prob":
+    return m.predict_proba(x)
+  else:
+    return m.predict(x)
  
 def cross_validation(results : list, k_folds : list, variables : list, 
   dummy_variables : list = [], apply_scale : bool = False, response : str ="Survived"):
