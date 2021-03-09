@@ -1,12 +1,6 @@
 """classification.py: A grab-bag of functions for fitting classification 
 models with scikit-learn and pandas"""
 
-__author__      = "EagleKahnXylem"
-__copyright__   = "Copyright 2021"
-__license__     = "MIT"
-__version__     = "0.1"
-__status__      = "Testing"
-
 import pandas as pd
 import numpy as np
 from math import sqrt
@@ -14,29 +8,37 @@ from typing import List, Dict
 from sklearn.linear_model import LogisticRegression 
 from sklearn.ensemble import RandomForestClassifier
 
-def shuffle(df : pd.DataFrame, balance_classes : bool = False, 
-  response : str ="Survived", frac : float = 1.0):
-  """ randomly shuffle an input pandas dataframe object, optionally 
-  enforcing balanced classes for a given response variable if asked """
-  categories : np.array = np.unique(df[response])
-  if balance_classes:
+
+__author__ = "EagleKahnXylem"
+__copyright__ = "Copyright 2021"
+__license__ = "MIT"
+__version__ = "0.1"
+__status__ = "Testing"
+
+
+def shuffle(df: pd.DataFrame, balance_classes: bool = False, 
+            response: str = "Survived", frac: float = 1.0):
+    """ randomly shuffle an input pandas dataframe object, optionally 
+    enforcing balanced classes for a given response variable if asked """
+    categories: np.array = np.unique(df[response])
+    if balance_classes:
     class_counts : list[int] = [ 
-      np.sum(df[response] == category) 
-      for category in categories ]
+        np.sum(df[response] == category) 
+        for category in categories ]
     min_count = np.min(class_counts)
     df = pd.concat([ 
         df[ df[response] == c ].sample(n=min_count) 
         for c in categories ])
-  else:
+    else:
     df = df.sample(n=len(df))
-  # wrap a pandas call to optionally split our dataframe
-  # into testing / training combinations if a frac= argument
-  # was applied
-  if frac is not 1.0:
+    # wrap a pandas call to optionally split our dataframe
+    # into testing / training combinations if a frac= argument
+    # was applied
+    if frac is not 1.0:
     train_set = df.copy().sample(frac=frac)
     test_set = df.copy().drop(train_set.index)
     return {'training': train_set, 'testing': test_set}
-  else:
+    else:
     return {'training': df}
  
 def mean_center(df : pd.DataFrame):
@@ -63,7 +65,7 @@ def scale(df : pd.DataFrame, scale : dict):
  
 def unscale(df : pd.DataFrame, scale : dict):
   """ back-transform a centered data.frame to its original values """
-  pass
+  return ( df * scale['sd'] ) + scale['mean']
  
 def get_interactions(df, variables, categoricals):
   pass
@@ -229,7 +231,9 @@ def std_effect_sizes(results : list):
       transpose()
   effects.columns = ['est', 'se']
   return effects
- 
+
+def ga_bitflipping(np.array : predictions)
+
 def coefficients(regression):
   """ extracts coefficients from a fitted regression model """
   # for logitic regression
